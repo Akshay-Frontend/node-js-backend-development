@@ -1,14 +1,19 @@
 import mongoose from "mongoose";
-import { DB_NAME } from "../constants.js";
 
 const connectDB = async () => {
   try {
-    const connectedInstant = await mongoose.connect(
-      `${process.env.MONGOODB_URL}/${DB_NAME}`
+    const connectionInstance = await mongoose.connect(
+      process.env.MONGOODB_URL
     );
-    console.log(`\n DB is connected ${connectedInstant.connection.host}`);
+
+    console.log(
+      `DB is connected ${connectionInstance.connection.host}`
+    );
+
+    return connectionInstance;
   } catch (error) {
-    console.log( "galt huai  DB is not connected !!",error);
+    console.log("MongoDB connection failed:", error);
+    throw error;
   }
 };
 
